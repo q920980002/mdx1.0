@@ -32,6 +32,11 @@ class Passport extends ActiveRecord implements IdentityInterface{
         $passport->phone = $data['phone'];
         $passport->password = $passport->md5($data['password']);
         if($passport->save()){
+            //添加 account记录
+            $account = new Account();
+            $account->passport_id = $passport->id;
+            $account->create_time = time();
+            $account->save();
             return ['code'=>1,'msg'=>'注册成功'];
         }else{
             return ['code'=>0,'msg'=>'注册失败'];
@@ -72,6 +77,9 @@ class Passport extends ActiveRecord implements IdentityInterface{
 
             if($passport->password === $passport->md5($post['password'])){
                 if(\Yii::$app->user->login($passport, isset($post['rememberMe']) ? 3600 * 24 * 30 : 0)){
+                    $account = Account::find()->where(['passport_id'=>$passport->id])->one();
+                    \Yii::$app->session['passport_id'] = $passport->id;
+                    \Yii::$app->session['account_id'] = $account->id;
                     return ['code'=>1,'msg'=>'登录成功'];
                 }
             }else{

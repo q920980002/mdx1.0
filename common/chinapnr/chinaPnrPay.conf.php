@@ -5,6 +5,7 @@
  * Time: 下午3:45
  */
 //汇付配置
+define('PLATFORM_HOST',"http://123.57.43.221/");
 
 //版本号
 define('INTERFACE_VERSION','10');

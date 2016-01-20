@@ -6,6 +6,7 @@
  * Time: 下午3:10
  */
 namespace frontend\controllers;
+use frontend\service\ChinapnrService;
 use yii\web\Controller;
 
 class ApiController extends Controller{
@@ -14,9 +15,10 @@ class ApiController extends Controller{
     public function actionUserAuth(){
 
         $post = \Yii::$app->request->post();
+        $chinapnrService = new ChinapnrService();
 
-        p($post);
-
+        $account_id = \Yii::$app->session['account_id'];
+        return $chinapnrService->authName($account_id,$post['name'],$post['idCardNo']);
 
     }
 
