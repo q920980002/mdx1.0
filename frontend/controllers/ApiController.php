@@ -14,7 +14,8 @@ class ApiController extends Controller{
     public function actionUserAuth(){
 
         $post = \Yii::$app->request->post();
-        
+
+        p($post);
 
 
     }
