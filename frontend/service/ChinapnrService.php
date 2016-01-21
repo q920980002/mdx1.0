@@ -37,7 +37,7 @@ class ChinapnrService {
         if($res['code'] == 0){
             return $res;
         }
-        
+
         //实名认证
         $this->_authName($account_id,$name,$idCardNo);
 
@@ -137,7 +137,7 @@ class ChinapnrService {
         $dict = array('w', '3', 'y', 'b', 'g', '4', 't', 'x', 'h', 'j');
         $rand = mt_rand(1000, 9999);
 
-        $res = 'mdx_';
+        $res = ACCOUNT_USER_PREFIX;
         for ($i = 0; $i < strlen($phone); $i++) {
             $res .= $dict[$phone[$i]];
         }
