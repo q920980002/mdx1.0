@@ -25,6 +25,7 @@ class ChinapnrService {
      * 构造函数
      */
     public function __construct(){
+        
         $this->pnrpayService = new chinaPnrPay();
     }
 
