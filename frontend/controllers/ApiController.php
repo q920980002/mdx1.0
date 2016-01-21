@@ -18,7 +18,8 @@ class ApiController extends Controller{
         $chinapnrService = new ChinapnrService();
 
         $account_id = \Yii::$app->session['account_id'];
-        $this->ajaxReturn($chinapnrService->authName($account_id,$post['name'],$post['idCardNo']));
+        $passport_id = \Yii::$app->session['passport_id'];
+        $this->ajaxReturn($chinapnrService->authName($account_id,$passport_id,$post['name'],$post['idCardNo']));
 
     }
 
