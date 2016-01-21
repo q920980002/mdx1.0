@@ -12,7 +12,7 @@
                 dataType: 'json',
                 success: function (data) {
                     afterAjax();
-
+                    alert(data.msg);
                 },
                 error: function () {
                     afterAjax();

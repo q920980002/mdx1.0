@@ -45,7 +45,6 @@ class ChinapnrService {
 
         try{
             $this->pnrpayService->fastRealNameAuth($authdata);
-
         }catch (Exception $e) {
             PnrpayError::addErrorRecord($account_id,$e->getMessage());
             return ['code'=>0,'msg'=>$e->getMessage()];
@@ -53,6 +52,7 @@ class ChinapnrService {
 
         $accountAuth = new AccountAuth();
         $accountAuth->status = 1;
+        $accountAuth->account_id = $account_id;
         $accountAuth->name = $name;
         $accountAuth->id_number = $idCardNo;
         $accountAuth->auth_time = time();
