@@ -120,8 +120,11 @@ class SiteController extends Controller
      */
     public function actionCart(){
 
+
         return $this->render("cart");
     }
+
+
 
     /**
      * 我的账户
