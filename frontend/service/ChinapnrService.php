@@ -48,7 +48,7 @@ class ChinapnrService {
 
         }catch (Exception $e) {
             PnrpayError::addErrorRecord($account_id,$e->getMessage());
-
+            return ['code'=>0,'msg'=>$e->getMessage()];
         }
 
         $accountAuth = new AccountAuth();
