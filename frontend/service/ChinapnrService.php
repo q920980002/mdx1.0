@@ -45,22 +45,22 @@ class ChinapnrService {
 
         try{
             $this->pnrpayService->fastRealNameAuth($authdata);
+            $accountAuth = new AccountAuth();
+            $accountAuth->status = 1;
+            $accountAuth->name = $name;
+            $accountAuth->id_number = $idCardNo;
+            $accountAuth->auth_time = time();
+            if($accountAuth->save()){
+                return ['code'=>1,'msg'=>'认证成功!'];
+            }else{
+                return ['code'=>0,'msg'=>'系统错误,请重试'];
+            }
         }catch (Exception $e) {
             PnrpayError::addErrorRecord($account_id,$e->getMessage());
-            return ['code'=>0,'msg'=>'系统错误,请重试'];
+
         }
 
-        $accountAuth = new AccountAuth();
-        $accountAuth->status = 1;
-        $accountAuth->name = $name;
-        $accountAuth->id_number = $idCardNo;
-        $accountAuth->auth_time = time();
-        if($accountAuth->save()){
-            return ['code'=>1,'msg'=>'认证成功!'];
-        }else{
-            return ['code'=>0,'msg'=>'系统错误,请重试'];
-        }
-
+        return ['code'=>0,'msg' => '请重新认证'];
 
 
     }

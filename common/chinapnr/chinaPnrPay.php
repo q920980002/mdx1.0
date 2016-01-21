@@ -7,8 +7,6 @@
 namespace common\chinapnr;
 
 use yii\base\Exception;
-
-
 require_once 'chinaPnrPay.conf.php';
 
 /**
