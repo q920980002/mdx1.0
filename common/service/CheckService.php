@@ -23,7 +23,6 @@ class CheckService
         } elseif ((strlen($id_card) == 15)) {
             $id_card = $this->_idcard_15to18($id_card);
             return $this->_idcard_checksum18($id_card);
-
         } else {
             return false;
         }
@@ -63,13 +62,9 @@ class CheckService
 
         }else{
             if(array_search(substr($idcard,12,3),array('996','997','998','999')) !== false){
-
                 $idcard=substr($idcard,0,6).'18'.substr($idcard,6,9);
-
-
             }else{
                 $idcard=substr($idcard,0,6).'19'.substr($idcard,6,9);
-
             }
         }
         $idcard=$idcard.$this->_idcard_verify_number($idcard);
@@ -89,7 +84,6 @@ class CheckService
         $idcard_base=substr($idcard,0,17);
         if($this->_idcard_verify_number($idcard_base)!=strtoupper(substr($idcard,17,1))) {
             return false;
-
         }else{
             return true;
         }

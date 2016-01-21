@@ -28,6 +28,14 @@ class ChinapnrService {
         $this->pnrpayService = new chinaPnrPay();
     }
 
+    /**
+     * 实名认证
+     * @param $account_id
+     * @param $passport_id
+     * @param $name
+     * @param $idCardNo
+     * @return array
+     */
     public function authName($account_id,$passport_id,$name,$idCardNo){
 
         $passport = Passport::findOne(array('id'=>$passport_id));
@@ -49,7 +57,7 @@ class ChinapnrService {
     }
 
 
-    public function _setUpChinapnrAccount($account_id,$phone,$name,$idCardNo){
+    private function _setUpChinapnrAccount($account_id,$phone,$name,$idCardNo){
 
 
         //汇付操作员id
@@ -97,7 +105,7 @@ class ChinapnrService {
      * @param $idCardNo
      * @return array
      */
-    public function _authName($account_id,$name,$idCardNo){
+    private function _authName($account_id,$name,$idCardNo){
 
         $authdata = array(
             'IdNo' => $idCardNo,
