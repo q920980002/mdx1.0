@@ -30,9 +30,20 @@ class ChinapnrService {
     public function authName($account_id,$passport_id,$name,$idCardNo){
 
         $passport = Passport::findOne(array('id'=>$passport_id));
-        $accountAuth = new AccountAuth();
+        /**
+         * 检查参数
+         */
+        $res = $this->_authCheck($account_id,$name,$idCardNo);
+        if($res['code'] == 0){
+            return $res;
+        }
+        
+        //实名认证
+        $this->_authName($account_id,$name,$idCardNo);
+
         //开通汇付账户
-        $this->_setUpChinapnrAccount($account_id,$passport->phone,$name,$idCardNo);
+        return $this->_setUpChinapnrAccount($account_id,$passport->phone,$name,$idCardNo);
+
 
     }
 
@@ -63,6 +74,20 @@ class ChinapnrService {
             return ['code'=>0,'msg'=>$e->getMessage()];
         }
 
+        $accountAuth = new AccountAuth();
+        $accountAuth->status = 1;
+        $accountAuth->account_id = $account_id;
+        $accountAuth->name = $name;
+        $accountAuth->id_number = $idCardNo;
+        $accountAuth->auth_user_number = $usrId;
+        $accountAuth->auth_user_pwd = $pwd;
+        $accountAuth->auth_time = time();
+        if($accountAuth->save()){
+            return ['code'=>1,'msg'=>'认证成功!'];
+        }else{
+            return ['code'=>0,'msg'=>'系统错误,请重试'];
+        }
+
     }
     /**
      * 实名认证
@@ -73,13 +98,7 @@ class ChinapnrService {
      */
     public function _authName($account_id,$name,$idCardNo){
 
-        /**
-         * 检查参数
-         */
-        $res = $this->_authCheck($account_id,$name,$idCardNo);
-        if($res['code'] == 0){
-            return $res;
-        }
+
 
         $authdata = array(
             'IdNo' => $idCardNo,
@@ -92,19 +111,6 @@ class ChinapnrService {
             PnrpayError::addErrorRecord($account_id,$e->getMessage());
             return ['code'=>0,'msg'=>$e->getMessage()];
         }
-
-        $accountAuth = new AccountAuth();
-        $accountAuth->status = 1;
-        $accountAuth->account_id = $account_id;
-        $accountAuth->name = $name;
-        $accountAuth->id_number = $idCardNo;
-        $accountAuth->auth_time = time();
-        if($accountAuth->save()){
-            return ['code'=>1,'msg'=>'认证成功!'];
-        }else{
-            return ['code'=>0,'msg'=>'系统错误,请重试'];
-        }
-
 
     }
 
