@@ -793,12 +793,12 @@ EOf;
         }
 
 
-        error_log('【' . date("Y-m-d H:i:s") . '】 ' . $url . '?' . http_build_query($tem_arr) . "\n".$req_str, 3, dirname(__FILE__) . "/api_req.log");
+        error_log('【' . date("Y-m-d H:i:s") . '】 ' . $url . '?' . http_build_query($tem_arr) . "\n".iconv('GBK', 'UTF-8', $req_str), 3, dirname(__FILE__) . "/api_req.log");
 
         //请求数据
         $res = $this->_curl($url, $tem_arr);
 
-        error_log('【' . date("Y-m-d H:i:s") . "】\n" . $res . "\n\n\n", 3, dirname(__FILE__) . "/api_resp.log");
+        error_log('【' . date("Y-m-d H:i:s") . "】\n" .  iconv('GBK', 'UTF-8', $res) . "\n\n\n", 3, dirname(__FILE__) . "/api_resp.log");
 
         return $this->checkRespData($res, $param_format['resp_params'], $check_field);
 
