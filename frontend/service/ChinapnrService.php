@@ -11,6 +11,7 @@ use common\chinapnr\chinaPnrPay;
 use common\models\AccountAuth;
 use common\models\Passport;
 use common\models\PnrpayError;
+use common\service\CheckService;
 use yii\base\ErrorException;
 use yii\base\Exception;
 
@@ -98,8 +99,6 @@ class ChinapnrService {
      */
     public function _authName($account_id,$name,$idCardNo){
 
-
-
         $authdata = array(
             'IdNo' => $idCardNo,
             'IdName' => $name,
@@ -114,10 +113,22 @@ class ChinapnrService {
 
     }
 
+    /**
+     * 实名认证 检查参数
+     * @param $account_id
+     * @param $name
+     * @param $idCardNo
+     * @return array
+     */
     private function _authCheck($account_id,$name,$idCardNo){
 
-        $accountauth = AccountAuth::find()->where(['account_id'=>$account_id])->one();
 
+        $service = new CheckService();
+        if(!$service->validation_filter_id_card($idCardNo)){
+            return ["code"=>0,"msg"=>"请输入正确的身份证号码"];
+        }
+
+        $accountauth = AccountAuth::find()->where(['account_id'=>$account_id])->one();
         if(isset($accountauth)){
             return ["code"=>0,"msg"=>"用户已通过实名认证"];
         }

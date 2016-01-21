@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Passport;
 use common\models\User;
+use common\service\CheckService;
 use common\service\SmsServer;
 use Yii;
 use common\models\LoginForm;
@@ -222,6 +223,7 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
+
         return $this->render('about');
     }
 

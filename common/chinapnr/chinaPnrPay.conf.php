@@ -47,7 +47,7 @@ define('TRANSFER_AUTH_QUERY_URL',TEST_SERVER_URL.'/gau/UnifiedServlet');
 //接口请求地址(账户余额查询)
 define('ACCOUNT_BALANCE_QUERY_URL',TEST_SERVER_URL.'/gaq/entry.do');
 
-define('ACCOUNT_USER_PREFIX','mdx1_');
+define('ACCOUNT_USER_PREFIX','mdx2_');
 
 //每日取现次数(不要随便更改，除非汇付另有通知)
 define('EVERYDAY_CASH_COUNT',2);
