@@ -77,7 +77,7 @@ class ChinapnrService {
         }
 
         $accountauth = AccountAuth::find()->where(['account_id'=>$account_id])->one();
-        //组合绑卡接口数据
+        //组合绑卡接口数据  充值卡
         $dataR = array(
             'OperId' => $accountauth->auth_user_number,
             'LoginPwd' => $accountauth->auth_user_pwd,
@@ -88,7 +88,7 @@ class ChinapnrService {
             'UsrMp' => $phone,
         );
 
-
+        //体现
         $cityInfo = ProvinceCity::findOne(array('city_code' => $cityCode));
         $dataD = array(
             'OperId' => $accountauth->auth_user_number,
@@ -102,11 +102,10 @@ class ChinapnrService {
 
         try{
             $this->pnrpayService->bindRechargeCard($dataR);
-            $this->pnrpayService->bindCashCard($dataD);
+            //$this->pnrpayService->bindCashCard($dataD);
 
             //添加绑卡数据
             $this->_addBindBank($account_id,$bankCode,$cardNo,$phone,$cityCode);
-
             return ['code'=>0,'msg'=>"绑卡成功!"];
         }catch (Exception $e){
 
